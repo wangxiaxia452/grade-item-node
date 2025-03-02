@@ -8,6 +8,8 @@ const cors = require('cors')
 var studentsRouter = require('./routes/students');
 var gradesRouter = require('./routes/grades')
 var historyRouter = require('./routes/history')
+var registerRouter = require('./routes/register')
+var loginRouter = require('./routes/login')
 var app = express();
 
 // view engine setup
@@ -21,6 +23,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//全局中间件
+function middlewareFunc(req, res, next) {
+   const token = req.headers.authorization
+   if(!token){
+     res.json({
+        code: '1111',
+        msg: '请先登录'
+     })
+   }else {
+     next()
+   }
+} 
+app.use('/register', registerRouter)
+app.use('/login',loginRouter)
+app.use(middlewareFunc)
 app.use('/student', studentsRouter);
 app.use('/grade', gradesRouter)
 app.use('/history', historyRouter)
@@ -38,7 +55,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
 });
 
 module.exports = app;

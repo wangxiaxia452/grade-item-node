@@ -3,6 +3,7 @@ const qs = require('qs');
 var router = express.Router();
 
 const stuInfoModel = require('../model/stuInfoModel')
+const gradesModel = require('../model/gradesModel')
 
 router.get('/', function(req,res){
   const {classChoose} = qs.parse(req.query)
@@ -52,20 +53,20 @@ router.post('/edit', function(req, res) {
 
 router.post('/del', function(req, res) {
   const {stuID} = req.body
-  stuInfoModel.deleteOne({stuID}).then( val => {
-     res.json({
-       code:'0000',
-       msg: '删除成功',
-       data: val
-     })
-  }, err => {
-   res.json({
-     code:'1111',
-     msg: '删除失败',
-     err: err
-   })
-  }) 
-
+  const deleteAll = Promise.all([stuInfoModel.deleteOne({stuID}),gradesModel.deleteOne({stuID})])
+  deleteAll.then( val => {
+    res.json({
+      code:'0000',
+      msg: '删除成功',
+      data: val
+    })
+ }, err => {
+    res.json({
+      code:'1111',
+      msg: '删除失败',
+      err: err
+    })
+ }) 
 });
 
 module.exports = router;
