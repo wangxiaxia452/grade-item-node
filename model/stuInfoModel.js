@@ -13,6 +13,10 @@ let stuInfoSchema = new mongoose.Schema({
      stuGender: {
          type: String,
          required: true
+     },
+     stuGrade: {
+        type: String,
+        required: true
      }
 
 })

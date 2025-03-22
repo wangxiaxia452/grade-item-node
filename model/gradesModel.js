@@ -6,6 +6,10 @@ const gradesSchema = new mongoose.Schema({
         required: true,
         unique: true 
     },
+    stuGrade: {
+        type: String,
+        required: true
+    },
     chinese:{
         type: Number,
         // require: true

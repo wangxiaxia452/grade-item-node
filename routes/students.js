@@ -7,7 +7,7 @@ const gradesModel = require('../model/gradesModel')
 
 router.get('/', function(req,res){
   const {classChoose} = qs.parse(req.query)
-  stuInfoModel.find({stuID: new RegExp(classChoose)}).then(val => {
+  stuInfoModel.find({stuGrade: classChoose}).then(val => {
     res.json({
       code:'0000',
       msg:'请求成功',

@@ -10,6 +10,7 @@ var gradesRouter = require('./routes/grades')
 var historyRouter = require('./routes/history')
 var registerRouter = require('./routes/register')
 var loginRouter = require('./routes/login')
+var uploadRouter = require('./routes/upload')
 var app = express();
 
 // view engine setup
@@ -41,6 +42,7 @@ app.use(middlewareFunc)
 app.use('/student', studentsRouter);
 app.use('/grade', gradesRouter)
 app.use('/history', historyRouter)
+app.use('/upload', uploadRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

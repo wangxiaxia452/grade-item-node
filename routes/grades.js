@@ -8,14 +8,15 @@ const stuInfoModel = require('../model/stuInfoModel')
 
 router.get('/', async (req, res) => {
     const {classChoose} = qs.parse(req.query)
-    let gradeList = await gradesModel.find({stuID: new RegExp(classChoose)})
-    let studentList = await stuInfoModel.find({stuID: new RegExp(classChoose)})
+    let gradeList = await gradesModel.find({stuGrade: new RegExp(classChoose)})
+    let studentList = await stuInfoModel.find({stuGrade: new RegExp(classChoose)})
     const result = []
     studentList.forEach(item => {
         let obj = {}
         obj.stuID = item.stuID,
         obj.stuName= item.stuName
         obj.stuGender = item.stuGender
+        obj.stuGrade = item.stuGrade
         gradeList.forEach(e => {
             if(e.stuID === item.stuID){
                 obj.chinese = e.chinese?e.chinese:0
